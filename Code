@@ -1,0 +1,26 @@
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
+# Spotify API credentials
+CLIENT_ID = 'your-client-id'  # Replace with your Client ID
+CLIENT_SECRET = 'your-client-secret'  # Replace with your Client Secret
+REDIRECT_URI = 'http://localhost:8888/callback'  # Replace with your Redirect URI
+
+# Set up Spotipy authorization
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID,
+                                               client_secret=CLIENT_SECRET,
+                                               redirect_uri=REDIRECT_URI,
+                                               scope=["user-library-read", "playlist-read-private", "user-top-read"]))
+
+
+# Function to get recommendations based on a seed track, artist, or genre
+def get_recommendations(seed_type, seed_value):
+    """
+    Get recommendations based on seed track, artist, or genre.
+    
+    :param seed_type: str, can be 'track', 'artist', or 'genre'
+    :param seed_value: str, the ID of the track/artist/genre to use as a seed
+    :return: list of recommended tracks
+    """
+    if seed_type not in ['track', 'artist', 'genre']:
+        raise ValueError("seed_type must be 'track', 'artist',
